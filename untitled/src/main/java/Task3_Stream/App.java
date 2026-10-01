@@ -1,4 +1,4 @@
-package org.example;
+package Task3_Stream;
 
 import java.util.ArrayList;
 import java.util.Comparator;

@@ -1,4 +1,4 @@
-package org.example;
+package Task3_Stream;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

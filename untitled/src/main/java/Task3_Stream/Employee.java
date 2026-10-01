@@ -1,4 +1,4 @@
-package org.example;
+package Task3_Stream;
 
 public class Employee {
 

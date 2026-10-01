@@ -31,7 +31,7 @@ public class Task5_2 implements Task {
 
     @Override
     public void stop() {
-        //isStopped = true;
-        Thread.currentThread().interrupt();
+        isStopped = true;
+        //Thread.currentThread().interrupt();
     }
 }

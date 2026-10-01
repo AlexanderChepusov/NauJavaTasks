@@ -24,9 +24,12 @@ public class Main {
             }
         });
 
+        //запуск сканирования портов на время
         //t2.start();
         //t1.start();
 
+
+        //отсчет времени
         Task5_2 t3 = new Task5_2(7);
         Thread t31 = new Thread(() -> {
             t3.start();
