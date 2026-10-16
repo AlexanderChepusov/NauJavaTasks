@@ -39,7 +39,7 @@ public class Task4 {
 Выходные  данные:  в  консоль  напечатан  результат  выполнения  запроса
 обработанный в соответствии с вариантом задания.
 
-         */
+         */try
         {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
@@ -107,7 +107,9 @@ public class Task4 {
 //            System.out.println(e.getMessage());
 //            e.printStackTrace();
 //        }
-    }
+    } catch (Exception e) {
+
+        }
 /* Синхронный запрос
  import java.io.IOException;
 import java.net.URI;
