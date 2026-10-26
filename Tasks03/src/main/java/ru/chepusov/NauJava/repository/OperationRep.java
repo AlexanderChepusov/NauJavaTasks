@@ -2,9 +2,10 @@ package ru.chepusov.NauJava.repository;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import ru.chepusov.NauJava.config.Config;
 import ru.chepusov.NauJava.entities.MoneyOperation;
+import ru.chepusov.NauJava.entities.Operation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,4 +62,6 @@ public class OperationRep implements CRUDRep<MoneyOperation>{
         }
         return result;
     }
+
+
 }

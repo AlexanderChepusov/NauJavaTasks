@@ -53,4 +53,12 @@ public class Account {
     public void setExpirationDate(OffsetDateTime expirationDate) {
         this.expirationDate = expirationDate;
     }
+
+    @Override
+    public String toString() {
+        return "Account"
+                + name +
+                ", type: " + type +
+                ", finishes " + expirationDate;
+    }
 }

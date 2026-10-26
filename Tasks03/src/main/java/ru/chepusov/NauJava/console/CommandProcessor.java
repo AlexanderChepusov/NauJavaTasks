@@ -4,17 +4,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.chepusov.NauJava.entities.MoneyOperation;
 import ru.chepusov.NauJava.service.MoneyOperationService;
+import ru.chepusov.NauJava.service.OperationService;
+import org.springframework.context.annotation.Profile;
 
-@Component
+//@Component
+//@Profile("!test")
 public class CommandProcessor
 {
     private final MoneyOperationService moneyService;
+    //private final OperationService<>
 
-    @Autowired
+    //@Autowired
     public CommandProcessor(MoneyOperationService moneyService)
     {
         this.moneyService = moneyService;
     }
+
 
     public void processCommand(String input)
     {
@@ -37,7 +42,8 @@ public class CommandProcessor
             }
             case "cat" ->
             {
-                System.out.println("Баланс по категории " + cmd[1] + " равен " + moneyService.summCategory(cmd[1]));
+                //System.out.println("Баланс по категории " + cmd[1] + " равен " + moneyService.summCategory(cmd[1]));
+
             }
             case "acc" ->
             {

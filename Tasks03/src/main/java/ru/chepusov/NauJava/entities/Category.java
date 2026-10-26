@@ -10,7 +10,7 @@ public class Category {
     private String name;
 
     @Column
-    private int percentage;
+    private Integer percentage;
 
     @Column
     private String type;
@@ -23,11 +23,11 @@ public class Category {
         this.name = name;
     }
 
-    public int getPercentage() {
+    public Integer getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(int percentage) {
+    public void setPercentage(Integer percentage) {
         this.percentage = percentage;
     }
 
@@ -37,5 +37,11 @@ public class Category {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "Category: " +
+                 name;
     }
 }

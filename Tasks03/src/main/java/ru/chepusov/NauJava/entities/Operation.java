@@ -96,4 +96,22 @@ public class Operation {
     public void setMarketplace(Marketplace marketplace) {
         this.marketplace = marketplace;
     }
+
+    @Override
+    public String toString() {
+        return (type.equalsIgnoreCase("payment") ? "PAYMENT " : "INCOME ") + "$" + amount + " in "
+                + category + " category " +
+                dateTime + " in "
+                + marketplace + " (userID "
+                + user + "; accountID "
+                + account + ").";
+//                "type='" + type + '\'' +
+//                ", amount=" + amount +
+//                ", category=" + category +
+//                ", account=" + account +
+//                ", user=" + user +
+//                ", dateTime=" + dateTime +
+//                ", marketplace=" + marketplace +
+//                '}';
+    }
 }

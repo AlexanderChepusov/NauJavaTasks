@@ -10,6 +10,14 @@ public class Marketplace {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Override
+    public String toString() {
+        return "Supermarket " +
+                name +
+                ", address: " + address +
+                ", works until " + workingTime;
+    }
+
     @Column
     private String name;
 

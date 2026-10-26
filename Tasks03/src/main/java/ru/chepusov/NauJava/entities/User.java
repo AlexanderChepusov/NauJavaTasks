@@ -14,7 +14,7 @@ public class User {
     private String firstName;
 
     @Column
-    private String lsstName;
+    private String lastName;
 
     @Column
     private int age;
@@ -35,12 +35,12 @@ public class User {
         this.firstName = firstName;
     }
 
-    public String getLsstName() {
-        return lsstName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLsstName(String lsstName) {
-        this.lsstName = lsstName;
+    public void setLastName(String lsstName) {
+        this.lastName = lsstName;
     }
 
     public int getAge() {
@@ -49,5 +49,12 @@ public class User {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return firstName + " " +
+                lastName
+                + ", " + age + " years";
     }
 }
