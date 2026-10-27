@@ -1,6 +1,8 @@
 package ru.chepusov.NauJava.repository;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.chepusov.NauJava.entities.Operation;
 
@@ -24,5 +26,8 @@ public interface OperationRepository extends CrudRepository<Operation, Long> {
     List<Operation> findByAmountLessThan(double price);
 
     List<Operation> findByCategory_NameIgnoreCase(String name);
+
+    @Query("SELECT o FROM Operation o join o.category c where c.name = :cat ")
+    List<Operation> findByCat(@Param("cat") String cat);
 }
 

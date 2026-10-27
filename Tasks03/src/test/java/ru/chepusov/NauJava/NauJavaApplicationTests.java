@@ -85,5 +85,16 @@ class NauJavaApplicationTests {
 			System.out.println("Found2: " + x);
 		}
 		System.out.println();
+
+
+		list = opRep.findByCat("Food");
+		System.out.println("<<<<<<<<<<<<>>>>>>>>>>>>>>");
+		for (Operation x : list
+		) {
+			System.out.println("Found3: " + x);
+		}
+		System.out.println("<<<<<<<<<<<<----------->>>>>>>>>>>>>>");
+		System.out.println();
 	}
+
 }
