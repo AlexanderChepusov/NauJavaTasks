@@ -1,6 +1,9 @@
 package ru.chepusov.NauJava.entities;
 
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Locale;
 
 @Entity
 @Table(name = "categories")
@@ -15,14 +18,32 @@ public class Category {
     @Column
     private String type;
 
-    private Integer id;
 
-    public Integer getId() {
-        return id;
+    //private Integer id;
+
+    public Category(String name, Integer percentage, String type) {
+        this.name = name.toLowerCase(Locale.ROOT);
+        this.percentage = percentage;
+        if (type.equalsIgnoreCase("income"))
+            this.type = type;
+        else
+            this.type = "payment";
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Category(String name, Integer percentage) {
+        this.name = name.toLowerCase(Locale.ROOT);
+        this.percentage = percentage;
+        this.type = "payment";
+    }
+
+    public Category(String name) {
+        this.name = name.toLowerCase(Locale.ROOT);
+        this.percentage = 0;
+        this.type = "payment";
+    }
+
+    @Autowired
+    public Category() {
     }
 
     public String getName() {

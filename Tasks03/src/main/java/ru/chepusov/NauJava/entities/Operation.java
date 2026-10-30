@@ -19,6 +19,7 @@ public class Operation {
     private double amount;
 
     @ManyToOne
+    @JoinColumn(name = "category_name")
     private Category category;
 
     @ManyToOne

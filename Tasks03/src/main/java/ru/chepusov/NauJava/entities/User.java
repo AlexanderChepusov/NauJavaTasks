@@ -19,6 +19,17 @@ public class User {
     @Column
     private int age;
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    @Column(unique = true)
+    private String login;
+
     public Long getId() {
         return id;
     }

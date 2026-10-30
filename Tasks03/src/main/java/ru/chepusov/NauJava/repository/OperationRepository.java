@@ -29,5 +29,8 @@ public interface OperationRepository extends CrudRepository<Operation, Long> {
 
     @Query("SELECT o FROM Operation o join o.category c where c.name = :cat ")
     List<Operation> findByCat(@Param("cat") String cat);
+
+//    @Query("SELECT o FROM Operation  where o.category.name = :cat ")
+//    List<Operation> findByCat(@Param("cat") String cat);
 }
 

@@ -10,5 +10,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     List<User> findByAgeLessThan(int age);
     List<User> findByFirstNameOrLastName(String first, String last);
 
+    User findByLogin(String name);
+
 
 }
