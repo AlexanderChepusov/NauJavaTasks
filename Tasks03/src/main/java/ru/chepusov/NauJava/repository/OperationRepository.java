@@ -3,13 +3,16 @@ package ru.chepusov.NauJava.repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 import ru.chepusov.NauJava.entities.Operation;
 
 import java.util.List;
 import java.util.Locale;
 
+@RepositoryRestResource
 public interface OperationRepository extends CrudRepository<Operation, Long> {
+
 
     List<Operation> findByCategory_Name(String category);
 
