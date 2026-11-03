@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список найденных пользователей</title>
+    <!><title th:text="${pageTitle}">FinAL - FINancial AnaLytic</title>
+</head>
+<body>
+<h1 th:text="${message}">Привет, мир!</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <b>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Возраст</th>
+            <th>Логин</th>
+        </b>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Цикл по списку usersList -->
+    <tr th:each="user : ${usersList}">
+        <td th:text="${user.id}">1</td>
+        <td th:text="${user.firstName}">Иван</td>
+        <td th:text="${user.lastName}">Иван</td>
+        <td th:text="${user.age}">25</td>
+        <td th:text="${user.login}">ivan</td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Ссылка на добавление (если есть) -->
+<a th:href="@{/users/add}">Добавить пользователя</a>
+</body>
+</html>
