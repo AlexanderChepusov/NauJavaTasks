@@ -32,7 +32,7 @@ public class UserController {
 
 
 
-    @PostMapping //("add")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED) // Вернет код 201 (Created) при успехе
     public User addUser(@RequestBody User user) {
         System.out.println("User " + user + " is saved!");
