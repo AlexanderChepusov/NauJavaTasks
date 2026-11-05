@@ -16,6 +16,7 @@ import ru.chepusov.NauJava.entities.Category;
 import ru.chepusov.NauJava.entities.Operation;
 import ru.chepusov.NauJava.entities.User;
 import ru.chepusov.NauJava.repository.*;
+import ru.chepusov.NauJava.service.ReportService;
 
 import java.util.List;
 
@@ -31,6 +32,8 @@ class NauJavaApplicationTests {
 
 	UserRepositoryCriteriaEmpl uRepCr;
 
+	ReportService rs;
+
 	@PersistenceContext
 	private EntityManager entityManager;
 
@@ -38,7 +41,7 @@ class NauJavaApplicationTests {
 	OperationRepositoryCriteriaImpl opRepCr;
 
 	@Autowired
-	public NauJavaApplicationTests(CategoryRepository catRep, AccountRepository accRep, MarketplaceRepository MPRep, OperationRepository opRep, UserRepository uRep, OperationRepositoryCustom opRep2, UserRepositoryCriteriaEmpl uRepCr, OperationRepositoryCriteriaImpl opRepCr) {
+	public NauJavaApplicationTests(CategoryRepository catRep, AccountRepository accRep, MarketplaceRepository MPRep, OperationRepository opRep, UserRepository uRep, OperationRepositoryCustom opRep2, UserRepositoryCriteriaEmpl uRepCr, OperationRepositoryCriteriaImpl opRepCr, ReportService rs) {
 		this.catRep = catRep;
 		this.accRep = accRep;
 		this.MPRep = MPRep;
@@ -47,6 +50,7 @@ class NauJavaApplicationTests {
 		this.opRep2 = opRep2;
 		this.uRepCr = uRepCr;
 		this.opRepCr = opRepCr;
+		this.rs = rs;
 	}
 
 //	@Test
@@ -185,6 +189,11 @@ class NauJavaApplicationTests {
 			 ) {
 			System.out.println(x);
 		}
+	}
+
+	@Test
+	public void concurrServiceTest() {
+		rs.createReport();
 	}
 
 }

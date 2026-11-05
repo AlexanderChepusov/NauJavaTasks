@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Отчет по многопоточности и асинхронности</title>
+</head>
+<body>
+<h1 th:text="${message}">Отчет</h1>
+<span th:text="|В системе зарегистрировано ${count} пользвателей|">В системе еще нет пользователей</span><br>
+<table border="1">
+    <thead>
+    <tr>
+        <b>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Возраст</th>
+            <th>Логин</th>
+        </b>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Цикл по списку usersList -->
+    <tr th:each="user : ${usersList}">
+        <td th:text="${user.id}">1</td>
+        <td th:text="${user.firstName}">Иван</td>
+        <td th:text="${user.lastName}">Иван</td>
+        <td th:text="${user.age}">25</td>
+        <td th:text="${user.login}">ivan</td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<span th:text="|На подсчет пользователей ушло ${count2} миллисекунд|">Все было быстро</span><br>
+<span th:text="|На вывод списка пользователей ушло ${count3} миллисекунд|">Все было мгновенно!)</span><br>
+<span th:text="|На формирование отчета потрачено ${count3} миллисекунд|">Все было мгновенно!)</span><br>
+
+</body>
+</html>
