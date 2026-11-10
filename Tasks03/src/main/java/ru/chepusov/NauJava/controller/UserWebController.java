@@ -2,16 +2,16 @@ package ru.chepusov.NauJava.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
+import ru.chepusov.NauJava.entities.Role;
 import ru.chepusov.NauJava.entities.User;
 import ru.chepusov.NauJava.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/users")
 public class UserWebController {
     private final UserRepository userRep;
 
@@ -19,11 +19,9 @@ public class UserWebController {
         this.userRep = userRep;
     }
 
-    @GetMapping("users/view")
+    @GetMapping("/view")
     public String showAll(Model model) {
         List<User> list = (List<User>) userRep.findAll();
-
-
         // Кладем список в модель под именем "usersList"
         model.addAttribute("usersList", list);
         return "users";
@@ -43,10 +41,4 @@ public class UserWebController {
         //model.addAttribute(user);
         return "redirect:/users/view";
     }
-
-
-
-
-
-
 }

@@ -24,13 +24,11 @@ public class UserController {
         return (List<User>) userRep.findAll();
     }
 
-    @GetMapping("/list")
+    @GetMapping("/young_list")
     @Operation(summary = "Выводит пользователей нужного возраста")
     public List<User> userListView(@RequestParam(required = false, defaultValue = "80") int age) {
         return userRep.findByAgeLessThan(age);
     }
-
-
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED) // Вернет код 201 (Created) при успехе
@@ -39,6 +37,4 @@ public class UserController {
         return userRep.save(user);
 
     }
-
-
 }

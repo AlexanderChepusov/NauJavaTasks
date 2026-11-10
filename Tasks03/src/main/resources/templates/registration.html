@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация нового пользователя</title>
+</head>
+<body>
+<b>Введите свои данные</b>
+<br><br>
+<form th:object="${user}" method="post" th:action = "@{/register}" id="registerForm"> <!--add}"-->
+    <label for="login">Login:</label>
+    <!--Введите уникальный логин:--> <input type="text" name = "login" th:field="*{login}" value = "<Логин>" id="login"/><br>
+    <label for="password">Введите пароль:</label>
+        <input type="password" th:field="*{password}" value = "" id = "password"/><br>
+    Повторите пароль: <input type="password" name="confirm" id="confirm" placeholder="Подтвердите пароль"/><br>
+    Введите имя: <input type="text" th:field="*{firstName}" value = "Имя"/><br>
+    Введите фамилию: <input type="text" th:field="*{lastName}" value = "Фамилия"/><br>
+    Введите возраст: <input type="text" th:field="*{age}" value = "Возраст"/><br>
+    <button type="submit">Создать</button>
+</form>
+
+</body>
+</html>
