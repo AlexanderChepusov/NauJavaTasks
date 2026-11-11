@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список зарегистрированных отчетов</title>
+</head>
+<body>
+<h2>Отчеты</h2><br>
+<table>
+    <thead>
+    <tr>
+        <b>
+            <th>N</th>
+            <th>Дата</th>
+            <th>Содержание</th>
+            <th>Время1, мс</th>
+            <th>Время2, мс</th>
+            <th>Время3, мс</th>
+        </b>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Цикл по списку usersList -->
+    <tr th:each="r : ${reports}">
+        <td th:text="${r.id}">-1</td>
+        <td th:text="${r.dateTime}">Время/дата</td>
+        <td th:text="${r.content}">Отчетик</td>
+        <td th:text="${r.t1}">T1</td>
+        <td th:text="${r.t2}">T2</td>
+        <td th:text="${r.t3}">T3</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

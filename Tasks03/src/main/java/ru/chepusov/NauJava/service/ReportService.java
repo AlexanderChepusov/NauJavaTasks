@@ -9,7 +9,9 @@ import ru.chepusov.NauJava.repository.ReportRepository;
 import ru.chepusov.NauJava.repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -38,7 +40,7 @@ public class ReportService {
         return result;
     }
 
-    public Long createReport() {
+    public Map.Entry<Long, List<Operation>> createReport() {
         /*
         1.  Отчет должен быть человекочитаемым (рекомендуется использовать
         табличное представление) в формате HTML-страницы.
@@ -91,7 +93,7 @@ public class ReportService {
         });
         int num =(int) future1.join().get();
         List<Operation> list = future2.join();
-
+        long time3 = (System.currentTimeMillis() - startTime);
         // Обрабатываем полученный результат
 
         //long time3 = System.currentTimeMillis() - startTime;
@@ -100,10 +102,16 @@ public class ReportService {
                 "\tnumber of registered users - " + usersCount.get()
                 + ".\n\tIt took " + time1 + " ms to count them.\n\t"
                 + "It took " + time2 + " ms to collect all operations. \n\t"
-                + "Report generation has taken " + (System.currentTimeMillis() - startTime) + " ms.";
+                + "Report generation has taken " + time3 + " ms.";
+        result.setT1(Long.parseLong(time1.toString()));
+        result.setT2(Long.parseLong(time2.toString()));
+        result.setT3(time3);
         result.setContent(content);
+        long id = reportRep.save(result).getId();
+
+        return Map.entry(id, list);
         //return reportRep.save(result).getId();
-        System.out.println(result);
-        return 0l;
+        //System.out.println(result);
+        //return 0l;
     }
 }

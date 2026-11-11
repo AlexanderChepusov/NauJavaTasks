@@ -8,7 +8,7 @@
 
 <body>
 <p th:object="${user}">
-    <span  th:text="|Hello, *{firstName}!!!|">Вы авторизованы как пользователь</span><br>
+    <span  th:text="|Hello, *{login}!!!|">Вы авторизованы как пользователь</span><br>
     <h3>Ваши данные:</h3><br>
     <span th:text="|Вы авторизовались как ${user?.getFirstName()} ${user?.lastName}, ${user.age} лет. |">User data...</span> <br>
     <span th:text="|Зашифрованный пароль хранится в виде ${user.password}|">Pass...</span><br>

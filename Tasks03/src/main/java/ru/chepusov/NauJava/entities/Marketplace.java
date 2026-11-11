@@ -25,7 +25,7 @@ public class Marketplace {
     private String address;
 
     @Column
-    private int workingTime;
+    private Integer workingTime;
 
     public Long getId() {
         return id;
@@ -51,11 +51,11 @@ public class Marketplace {
         this.address = address;
     }
 
-    public int getWorkingTime() {
+    public Integer getWorkingTime() {
         return workingTime;
     }
 
-    public void setWorkingTime(int workingTime) {
+    public void setWorkingTime(Integer workingTime) {
         this.workingTime = workingTime;
     }
 }

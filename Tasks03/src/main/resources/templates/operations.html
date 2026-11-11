@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список операций</title>
+</head>
+<body>
+<h2>Операции</h2><br>
+    <table border="1">
+        <thead>
+        <tr>
+            <b>
+                <th>N</th>
+                <th>Дата</th>
+                <th>Цена</th>
+                <th>Категория</th>
+                <th>Покупатель</th>
+                <th>Тип</th>
+                <th>Счет</th>
+            </b>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Цикл по списку usersList -->
+        <tr th:each="op : ${operations}">
+            <td th:text="${op.id}">-1</td>
+            <td th:text="${op.dateTime}">Дата/Время</td>
+            <td th:text="${op.amount}">Цена</td>
+            <td th:text="${op.category.name}">Категория</td>
+            <td th:text="${op.user.login}">Покупатель</td>
+            <td th:text="${op.type}">Расход/Приход</td>
+            <td th:text="${op.account.name}">Счет</td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

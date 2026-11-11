@@ -11,7 +11,7 @@ import ru.chepusov.NauJava.repository.OperationRepository;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ops")
+@RequestMapping("/operations")
 @Tag(name = "Операции")
 public class OperationController {
     private final OperationRepository opRep;
@@ -19,6 +19,7 @@ public class OperationController {
     public OperationController(OperationRepository opRep) {
         this.opRep = opRep;
     }
+
 
     @GetMapping("/{money}")
     public List<Operation> getExpencive(@PathVariable double money) {

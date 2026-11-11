@@ -30,7 +30,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((reqests) -> reqests
                     .requestMatchers("/swagger-ui/index.html", "/delete").hasRole("ADMIN")
-                    .requestMatchers("/create").hasRole("CREATOR")
+                    .requestMatchers("/create", "/reports/create").hasRole("CREATOR")
                     .requestMatchers("/register", "/registration", "/","/login").permitAll()
                     //.requestMatchers("/", "/users").permitAll()
                     .requestMatchers("/**").authenticated()
