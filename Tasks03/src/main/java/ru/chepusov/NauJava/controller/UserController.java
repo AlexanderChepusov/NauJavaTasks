@@ -19,7 +19,7 @@ public class UserController {
         this.userRep = userRep;
     }
 
-    @GetMapping
+    @GetMapping("/")
     public List<User> findAllUsers() {
         return (List<User>) userRep.findAll();
     }

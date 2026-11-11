@@ -7,8 +7,22 @@
 <body>
 <h1>Стартовая страница проекта FINAL (FINancial AnaLytic)</h1>
 <br>
+
+<div th:if="${param.logout != null and param.logout[0] == 'done'}">
+    Вы успешно вышли из системы!  <br>
+    <br>
+</div>
+
+
+
 <a href = "/users/view">См. список пользователей</a> <br>
 <a href = "/login">Войти в систему</a> <br>
-<a href = "/register">Зарегистрироваться в системе</a> <br>
+<a href = "/register">Зарегистрироваться в системе</a> <br><br>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit">Выйти</button>
+</form>
+
+
 </body>
 </html>

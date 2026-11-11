@@ -10,18 +10,7 @@ import ru.chepusov.NauJava.repository.UserRepository;
 
 @Service
 public class UserAuthService implements UserDetailsService {
-
-    //@Bean
-//    public UserDetailsService userDetailsService(UserRepository userRepo) {
-//        return username -> {
-//            User user = userRepository.findByLogin(username);
-//            if (user != null) return user;
-//            throw new UsernameNotFoundException("User ‘" + username + "’ not found");
-//        };
-//    }
-
     private final UserRepository userRepository;
-
     public UserAuthService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -31,6 +20,5 @@ public class UserAuthService implements UserDetailsService {
         User user = userRepository.findByLogin(username);
         if (user != null) return user;
         else throw new UsernameNotFoundException("User ‘" + username + "’ not found");
-        //return null; //userRepository.findByLogin(username);
     }
 }

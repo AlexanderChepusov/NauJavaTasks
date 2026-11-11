@@ -8,17 +8,21 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.chepusov.NauJava.criteriaapi.OperationRepositoryCriteriaImpl;
 import ru.chepusov.NauJava.criteriaapi.UserRepositoryCriteriaEmpl;
 import ru.chepusov.NauJava.entities.Category;
 import ru.chepusov.NauJava.entities.Operation;
+import ru.chepusov.NauJava.entities.Role;
 import ru.chepusov.NauJava.entities.User;
 import ru.chepusov.NauJava.repository.*;
 import ru.chepusov.NauJava.service.ReportService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -34,6 +38,8 @@ class NauJavaApplicationTests {
 
 	ReportService rs;
 
+	PasswordEncoder passwordEncoder;
+
 	@PersistenceContext
 	private EntityManager entityManager;
 
@@ -41,7 +47,7 @@ class NauJavaApplicationTests {
 	OperationRepositoryCriteriaImpl opRepCr;
 
 	@Autowired
-	public NauJavaApplicationTests(CategoryRepository catRep, AccountRepository accRep, MarketplaceRepository MPRep, OperationRepository opRep, UserRepository uRep, OperationRepositoryCustom opRep2, UserRepositoryCriteriaEmpl uRepCr, OperationRepositoryCriteriaImpl opRepCr, ReportService rs) {
+	public NauJavaApplicationTests(CategoryRepository catRep, AccountRepository accRep, MarketplaceRepository MPRep, OperationRepository opRep, UserRepository uRep, OperationRepositoryCustom opRep2, UserRepositoryCriteriaEmpl uRepCr, OperationRepositoryCriteriaImpl opRepCr, ReportService rs, PasswordEncoder passwordEncoder) {
 		this.catRep = catRep;
 		this.accRep = accRep;
 		this.MPRep = MPRep;
@@ -50,6 +56,7 @@ class NauJavaApplicationTests {
 		this.opRep2 = opRep2;
 		this.uRepCr = uRepCr;
 		this.opRepCr = opRepCr;
+		this.passwordEncoder = passwordEncoder;
 		this.rs = rs;
 	}
 
@@ -194,6 +201,44 @@ class NauJavaApplicationTests {
 	@Test
 	public void concurrServiceTest() {
 		rs.createReport();
+	}
+
+	@Test
+	public void setPasswords() {
+		Map<String, String> map = new HashMap<>();
+		map.put("Anny", "1234");
+		map.put("Ivan", "1234");
+		map.put("007", "1234");
+		map.put("Fury", "1234");
+		map.put("Chas", "1234");
+		map.put("Jane", "1234");
+		map.put("Mike", "1234");
+		map.put("Samanta", "1234");
+		map.put("Sonya", "1234");
+		map.put("chas90", "4321");
+		map.put("spidey", "MJ_love");
+		map.put("admin", "admin");
+
+		List<Long> lId = uRep.listOfNullPassword();
+		System.out.println("List contains " + lId.size() + " fields:");
+		System.out.println(lId);
+
+		for (Map.Entry<String, String> x : map.entrySet()) {
+			User user = uRep.findByLogin(x.getKey());
+			if (user.getPassword() == null) {
+				user.setPassword(passwordEncoder.encode(x.getValue()));
+				System.out.println("Pass for " + x.getKey() + " was successfully changed: \n\t"
+						+ x.getValue() + " --> " + passwordEncoder.encode(x.getValue()));
+			}
+			if (user.getRoles().isEmpty()) {
+				user.setRoles(List.of(Role.USER));
+				System.out.println("For " + x.getKey() + " USER-role was set.");
+			}
+			uRep.save(user);
+			System.out.println(user.getLogin() + " - " + user.getRoles());
+		}
+		//List<User> list = uRep.findByLogin()
+		Assertions.assertTrue(uRep.listOfNullPassword().isEmpty());
 	}
 
 }

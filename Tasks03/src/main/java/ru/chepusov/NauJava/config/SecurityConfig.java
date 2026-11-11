@@ -31,12 +31,19 @@ public class SecurityConfig {
                 .authorizeHttpRequests((reqests) -> reqests
                     .requestMatchers("/swagger-ui/index.html", "/delete").hasRole("ADMIN")
                     .requestMatchers("/create").hasRole("CREATOR")
-                    .requestMatchers("/login", "/register").permitAll()
-                    .requestMatchers("/", "/users").permitAll()
+                    .requestMatchers("/register", "/registration", "/","/login").permitAll()
+                    //.requestMatchers("/", "/users").permitAll()
                     .requestMatchers("/**").authenticated()
                 )
                 .formLogin(form -> form
                                 .loginPage("/login")
+                                .defaultSuccessUrl("/users/profile", true)
+                                .permitAll()
+                ).logout(logout -> logout
+                                .logoutUrl("/logout")
+                                .logoutSuccessUrl("/login?logout") // <-- КУДА ИДТИ ПОСЛЕ ВЫХОДА
+                                .invalidateHttpSession(true)           // Удалить сессию (true по умолчанию)
+                                .deleteCookies("JSESSIONID")
                                 .permitAll()
                 )
         ;

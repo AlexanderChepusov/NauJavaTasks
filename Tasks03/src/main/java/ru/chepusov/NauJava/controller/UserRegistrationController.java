@@ -23,23 +23,25 @@ class UserRegistrationController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping//("auth")
+    @GetMapping
     public String registerNewUser(Model model) {
         User user = new User();
-        user.setRoles(List.of(Role.USER));
         model.addAttribute("user", user);
         return "registration";
     }
 
     @PostMapping
-    public String registerUser(@ModelAttribute User user, @RequestParam("confirm") String confirm) {
+    public String registerUser(@ModelAttribute User user, @RequestParam("confirm") String confirm, Model model) {
         if (!user.getPassword().equals(confirm)) throw new IllegalArgumentException("Passwords are not match!!!");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRep.save(user);
-        return "redirect:/users/view";  //return "redirect:/login";
+        user.setRoles(List.of(Role.USER));
+        long id = userRep.save(user).getId();
+        model.addAttribute("user", user);
+        return "redirect:users/profile/" + id;
+        //return "redirect:/users/view";  //return "redirect:/login";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/non-login")
     public String loginPage() {
         // Получаем информацию о текущем пользователе
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

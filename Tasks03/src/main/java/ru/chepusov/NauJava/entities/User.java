@@ -29,7 +29,7 @@ public class User implements UserDetails {
     private String lastName;
 
     @Column
-    private int age;
+    private Integer age;
 
     @Column(unique = true)
     private String login;
@@ -92,11 +92,11 @@ public class User implements UserDetails {
         this.lastName = lsstName;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 

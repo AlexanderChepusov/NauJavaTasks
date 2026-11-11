@@ -1,5 +1,7 @@
 package ru.chepusov.NauJava.controller;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +34,32 @@ public class UserWebController {
         User user = new User();
         model.addAttribute("user", user);
         return "userCreation";
+    }
+
+    @GetMapping("/profile/{id}")
+    public String showProfile(@PathVariable long id, Model model) {
+        User user = userRep.findById(id);
+        model.addAttribute("user", user);
+        return "profile";
+    }
+
+    @GetMapping("/profile")
+    public String showCurrentUser(Model model) {
+        // Получаем логин текущего авторизованного пользователя
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String login = auth.getName();
+
+        // Ищем пользователя в базе по логину
+        User user = userRep.findByLogin(login);
+        model.addAttribute("user", user);
+        return "profile";
+    }
+
+    @GetMapping("/list")
+    public String showAllUsers(Model model) {
+        List<User> list = (List<User>) userRep.findAll();
+        model.addAttribute("usersList", list);
+        return "users";
     }
 
     @PostMapping ("users/new")
