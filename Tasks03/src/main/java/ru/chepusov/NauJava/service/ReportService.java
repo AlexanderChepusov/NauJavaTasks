@@ -8,6 +8,7 @@ import ru.chepusov.NauJava.repository.OperationRepository;
 import ru.chepusov.NauJava.repository.ReportRepository;
 import ru.chepusov.NauJava.repository.UserRepository;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -107,6 +108,7 @@ public class ReportService {
         result.setT2(Long.parseLong(time2.toString()));
         result.setT3(time3);
         result.setContent(content);
+        result.setDateTime(OffsetDateTime.now());
         long id = reportRep.save(result).getId();
 
         return Map.entry(id, list);

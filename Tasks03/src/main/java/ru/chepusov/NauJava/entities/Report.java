@@ -3,6 +3,7 @@ package ru.chepusov.NauJava.entities;
 import jakarta.persistence.*;
 
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 @Entity
 @Table(name="reports")
@@ -92,5 +93,23 @@ public class Report {
                 + "\nFinished with t1 = " + t1
                 + " ms, t2 = " + t2
                 + " ms t3 = t3";
+    }
+
+    public String getTimeInfo() {
+        return getEkbTime();
+    }
+
+    private String getEkbTime() {
+        int year = dateTime.getYear();
+        int month = dateTime.getMonthValue();
+        int day = dateTime.getDayOfMonth();
+
+        ZoneOffset offset = dateTime.getOffset(); // +05:00
+        int hour = dateTime.getHour() + (offset.getTotalSeconds() / 3600);
+        int minute = dateTime.getMinute();
+        int second = dateTime.getSecond();
+
+        return "" + hour + ":" + minute + ":" + second + "  " + day + "-" + month + "-" + year + " \n"
+                + offset + " " + offset.getTotalSeconds() + " -> " + (offset.getTotalSeconds() / 3600);
     }
 }

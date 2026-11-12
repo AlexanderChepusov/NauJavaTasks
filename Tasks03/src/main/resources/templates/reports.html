@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2>Отчеты</h2><br>
-<table>
+<table border="1"> <!--style="border: 1px solid black;"-->
     <thead>
     <tr>
         <b>
@@ -23,7 +23,7 @@
     <!-- Цикл по списку usersList -->
     <tr th:each="r : ${reports}">
         <td th:text="${r.id}">-1</td>
-        <td th:text="${r.dateTime}">Время/дата</td>
+        <td th:text="${r.timeInfo}">Время/дата</td>
         <td th:text="${r.content}">Отчетик</td>
         <td th:text="${r.t1}">T1</td>
         <td th:text="${r.t2}">T2</td>
