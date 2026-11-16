@@ -43,6 +43,17 @@ public class User implements UserDetails {
     @ColumnTransformer(write = "?::text[]")
     private List<Role> roles = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Account> accounts = new ArrayList<>();
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
     public List<Role> getRoles() {
         return roles;
     }

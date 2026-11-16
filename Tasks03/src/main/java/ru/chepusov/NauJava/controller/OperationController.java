@@ -21,8 +21,11 @@ public class OperationController {
     }
 
 
+    /*
     @GetMapping("/{money}")
     public List<Operation> getExpencive(@PathVariable double money) {
         return opRep.findByAmountGreaterThan(money);
     }
+
+     */
 }
