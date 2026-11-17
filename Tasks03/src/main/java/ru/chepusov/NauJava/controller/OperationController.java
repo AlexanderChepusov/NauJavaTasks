@@ -11,13 +11,18 @@ import ru.chepusov.NauJava.repository.OperationRepository;
 import java.util.List;
 
 @RestController
-@RequestMapping("/operations")
+@RequestMapping("/rest/operations")
 @Tag(name = "Операции")
 public class OperationController {
     private final OperationRepository opRep;
 
     public OperationController(OperationRepository opRep) {
         this.opRep = opRep;
+    }
+
+    @GetMapping("{id}")
+    public List<Operation> showUserOperations(@PathVariable long id) {
+        return opRep.findByUserId(id);
     }
 
 

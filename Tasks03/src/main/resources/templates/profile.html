@@ -8,19 +8,26 @@
 
 <body>
 <p th:object="${currentUser}">
-    <h2  th:text="|Добро пожаловать, *{login}!!!|">Вы авторизованы как пользователь</h2>
+    <h2  th:text="|Добро пожаловать, ${currentUser?.login}!!!|">Вы авторизованы как пользователь</h2>
     <h3>Ваши данные:</h3>
     <span th:text="|Вы авторизовались как ${currentUser?.getFirstName()} ${currentUser?.lastName}, ${currentUser.age} лет. |">User data...</span> <br>
-    <span th:text="|Зашифрованный пароль хранится в виде ${currentUser.password}|">Pass...</span><br>
-    <p th:text="|Роли пользователя: ${currentUser.roles}|">Other data...</p><br>
+    <span th:text="|Зашифрованный пароль хранится в виде ${currentUser.password}|">Pass...</span>
+    <div th:text="|Роли пользователя: ${currentUser.roles}|">Other data...</div>
     <!-- <p th:text="|Ваши счета: |">Other data...</p><br> -->
-    <p><u>Ваши счета:</u><br>
-        <!-- <span th:each="acc : *{currentUser.accounts}" th:text="|*{acc.name}|\n">Что-то пошло не так...</span> -->
+    <div><u>Ваши счета:</u><br>
+        <!--span th:text="${currentUser.accounts}">...счета пользователя....</span><br> -->
+        <!--span th:text="${accInfo}">...попытка номер 2....</span><br> -->
+        <!--span th:each="acc : *{currentUser.accounts}" th:text="|*{acc.name}|\n">Что-то пошло не так...</span> -->
         <span th:each="acc : ${currentUser.accounts}">
-            <span th:text="${acc.name}"></span><br>
+            <span th:text="${acc.name}">smth...</span><br>
         </span>
-
-    </p><br>
+    </div>
+    <form method="post" th:action="@{/newAccount}">
+        <input type="text" name="name" placeholder="Название счета (name)">
+        <input type="text" name="type" placeholder="Тип счета">
+        <input type="datetime-local" name = "expDate" placeholder="Срок действия (до)"><br>
+        <input type="submit" value="Добавить новй счет">
+    </form>
 </p>
 Для выхода нажмите кнопку
 <form th:action="@{/logout}" method="post">
