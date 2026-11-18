@@ -6,7 +6,7 @@
 </head>
 <body>
 <header>
-    <h1 th:text="---|Пользователь ${currentUser.firstName} ${currentUser.lastName} (${currentUser.login})|---">Пользователь неизвестен...</h1>
+    <h1 th:text="|---Пользователь ${currentUser?.firstName} ${currentUser?.lastName} (${currentUser?.login})---|">Пользователь неизвестен...</h1>
     <!--
     <p>Который сделан на основе готового шаблона</p>
     <nav>
@@ -21,7 +21,7 @@
 <h2>Добавить новую операцию</h2>
 
 <form th:action="@{/operations/new}" method="post" th:object="${operation}">
-    <table border="1" th:object="operation">
+    <table border="1">
         <thead>
             <tr>
                 <b>
@@ -36,23 +36,23 @@
         <tbody>
             <tr>
 
-
-
-                <!--
-        Введите уникальный логин: <input type="text" name = "login" th:field="*{login}" placeholder="Введите Логин" id="login"/><br>
-                -->
-
+<!--
+<span th:each="acc : ${currentUser.accounts}">
+            <span th:text="${acc.name}">smth...</span><br>
+        </span>
+-->
                 <td>
-                    <select id="type" name="*{type}" >
-                    <!--option value="">-- Пожалуйста, выберите вариант --</option-->
+                    <select id="type" th:field="*{type}">
                         <option value="payment">Покупка</option>
                         <option value="income">Доход</option>
                         <option value="saving">Накопление</option>
                     </select>
                 </td>
-                <td><input type="text" name="*{amount}" id = "amount" placeholder="Сумма"></td>
                 <td>
-                    <select id="category" name="category">
+                    <input type="text" th:field="*{amount}" id = "amount" placeholder="Сумма">
+                </td>
+                <td>
+                    <select id="category" name="caty">
                         <!--option value="">-- Пожалуйста, выберите вариант --</option-->
                         <option th:each="cat : ${catList}"
                                 th:value="${cat.name}"
@@ -62,18 +62,19 @@
 
                     </select>
                 </td>
-                <td>Счет
-                    <select id="account" th:field="*{account.id}">
-                        <option th:each="acc : ${accountsList}"
+                <td>
+                    <select id="account" th:field="*{account}">
+                        <option th:each="acc : ${accList}"
                                 th:value="${acc.id}"
-                                th:text="${acc.name}"></option>
-                    </select>Категория
+                                th:text="${acc.name}">
+                        </option>
+                    </select>
                 </td>
                 <td>
-                    <select id="marketplace" th:field="*{marketplace.id}">
-                        <option th:each="acc : ${accountsList}"
-                                th:value="${acc.id}"
-                                th:text="${acc.name}"></option>
+                    <select id="marketplace" th:field="*{marketplace}">
+                        <option th:each="mp : ${mpList}"
+                                th:value="${mp.id}"
+                                th:text="|${mp.name}, ${mp.address}|"></option>
                     </select>
                 </td>
             </tr>
@@ -106,9 +107,9 @@
         <td th:text="${op.dateTime}">Дата/Время</td>
         <td th:text="${op.type}">Расход/Приход</td>
         <td th:text="${op.amount}">Цена</td>
-        <td th:text="${op.category.name}">Категория</td>
-        <td th:text="${op.account.name}">Счет</td>
-        <td th:text="${op.marketplace.name}">Магазин</td>
+        <td th:text="${op?.category?.name}">Категория</td>
+        <td th:text="${op?.account?.name}">Счет</td>
+        <td th:text="${op?.marketplace?.name}">Магазин</td>
     </tr>
     </tbody>
 </table>
@@ -116,7 +117,8 @@
 </body>
 
 <footer>
-    <p><input type="button" value="Logout">Выход и прочая навигация</p>
+    <p><input type="button" value="Logout"><br>
+        Выход и прочая навигация</p>
 </footer>
 </html>
 

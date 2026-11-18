@@ -23,13 +23,13 @@
         <tbody>
         <!-- Цикл по списку usersList -->
         <tr th:each="op : ${operations}">
-            <td th:text="${op.id}">-1</td>
-            <td th:text="${op.dateTime}">Дата/Время</td>
-            <td th:text="${op.amount}">Цена</td>
-            <td th:text="${op.category.name}">Категория</td>
-            <td th:text="${op.user.login}">Покупатель</td>
-            <td th:text="${op.type}">Расход/Приход</td>
-            <td th:text="${op.account.name}">Счет</td>
+            <td th:text="${op?.id}">-1</td>
+            <td th:text="${op?.dateTime}">Дата/Время</td>
+            <td th:text="${op?.amount}">Цена</td>
+            <td th:text="${op?.category?.name}">Категория</td>
+            <td th:text="${op?.user?.login}">Покупатель</td>
+            <td th:text="${op?.type}">Расход/Приход</td>
+            <td th:text="${op?.account?.name}">Счет</td>
         </tr>
         </tbody>
     </table>

@@ -1,27 +1,33 @@
 package ru.chepusov.NauJava.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.chepusov.NauJava.entities.Operation;
+import ru.chepusov.NauJava.entities.User;
 import ru.chepusov.NauJava.repository.OperationRepository;
+import ru.chepusov.NauJava.service.DataPrepareService;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Controller
-@RequestMapping("/ops")
+@RequestMapping("/operations")
 @Tag(name = "Операции")
 public class OperationWebController {
     private final OperationRepository opRep;
+    private final DataPrepareService dps;
 
-    public OperationWebController(OperationRepository opRep) {
+    public OperationWebController(OperationRepository opRep, DataPrepareService dps) {
         this.opRep = opRep;
+        this.dps = dps;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/")
     public String showAllOperations(Model model){
         List<Operation> list = (List<Operation>) opRep.findAll();
@@ -30,17 +36,64 @@ public class OperationWebController {
     }
 
     @GetMapping("/{id}")
-    public String showUserOperations(@PathVariable long id, Model model) {
+    public String showUserOperations(@PathVariable long id, Model model, @AuthenticationPrincipal User user) {
+        if (id != user.getId()) {
+
+            throw new AccessDeniedException("Вам недуступна данная операция");
+            }
+
+//        CompletableFuture<List<Category>> future1 = CompletableFuture.supplyAsync(() -> {
+//            // Симулируем длительную задачу
+//            long startTime1 = System.currentTimeMillis();
+//            usersCount.set((int) userRep.count());
+//            time1.set(System.currentTimeMillis() - startTime1);
+//            return usersCount;
+//        });
+
+        model.addAttribute("catList", dps.prepareCategories());
+        model.addAttribute("accList", user.getAccounts());
+        model.addAttribute("mpList", dps.prepareMarketplaces());
+
+
         List<Operation> list = opRep.findByUserId(id);
         model.addAttribute("operations", list);
-        return "operations";
+        model.addAttribute("operation", new Operation());
+        return "operationsList";
     }
 
-    @GetMapping
-    public String showOneCateory(@RequestParam String category, Model model) {
+    @GetMapping("/cat/{category}")
+    public String showOneCateory(@AuthenticationPrincipal User user,@PathVariable String category, Model model) {
+
+        model.addAttribute("catList", dps.prepareCategories());
+        model.addAttribute("accList", user.getAccounts());
+        model.addAttribute("mpList", dps.prepareMarketplaces());
+
+
         List<Operation> list = opRep.findByCategory_Name(category);
         model.addAttribute("operations", list);
-        return "operations";
+        model.addAttribute("operation", new Operation());
+        return "operationsList";
+    }
+
+    @PostMapping("/new")
+    public String addNewOperation(@AuthenticationPrincipal User user, Model model
+            , @ModelAttribute Operation operation, @RequestParam String caty) {
+        System.out.println("-------I've got category " + caty + " ------------");
+        //заглушка
+        operation.setDateTime(OffsetDateTime.now());
+        operation.setUser(user);
+        operation.setCategory(dps.getCategoryByName(caty));
+        System.out.println(operation);
+        opRep.save(operation);
+
+        model.addAttribute("catList", dps.prepareCategories());
+        model.addAttribute("accList", user.getAccounts()); //dps.getUserAccounts(user.getId()));
+        model.addAttribute("mpList", dps.prepareMarketplaces());
+
+        List<Operation> list = opRep.findByUserId(user.getId());
+        model.addAttribute("operation", new Operation());
+        model.addAttribute("operations", list);
+        return "redirect:/operations/" + user.getId();
     }
 
 }

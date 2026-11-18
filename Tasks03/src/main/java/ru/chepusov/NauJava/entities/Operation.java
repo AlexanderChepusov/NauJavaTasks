@@ -22,16 +22,22 @@ public class Operation {
     @JoinColumn(name = "category_name")
     private Category category;
 
-    @ManyToOne
+    //@ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")  // имя колонки в БД
     private Account account;
 
-    @ManyToOne
+    //@ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column
     private OffsetDateTime dateTime;
 
-    @ManyToOne
+    //@ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "marketplace_id")
     private Marketplace marketplace;
 
     public Integer getId() {

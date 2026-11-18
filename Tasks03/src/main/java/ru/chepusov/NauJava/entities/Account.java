@@ -68,7 +68,7 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account"
+        return "Account_" + id + " "
                 + name +
                 ", type: " + type +
                 ", finishes " + expirationDate;

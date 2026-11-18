@@ -11,9 +11,7 @@ import ru.chepusov.NauJava.entities.User;
 import ru.chepusov.NauJava.repository.AccountRepository;
 import ru.chepusov.NauJava.repository.UserRepository;
 
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.*;
 
 @Controller
 @RequestMapping("/")
@@ -40,19 +38,16 @@ public class CurrentUserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth != null && auth.isAuthenticated() && !(auth.getPrincipal() instanceof String)) {
-
-            LocalDateTime localDateTime = LocalDateTime.parse(expDate);
+            LocalDateTime localDate = LocalDate.parse(expDate).atStartOfDay();
             // Добавляем часовой пояс (например, +05:00 Екатеринбург)
             ZoneOffset offset = ZoneOffset.ofHours(5);
             // Создаем OffsetDateTime
-            OffsetDateTime offsetDateTime = OffsetDateTime.of(localDateTime, offset);
+            OffsetDateTime offsetDateTime = OffsetDateTime.of(localDate, offset);
             acc.setUser((User)auth.getPrincipal());
             acc.setExpirationDate(offsetDateTime);
             accRep.save(acc);
-
             return "redirect:/profile";
         }
-
         return "redirect:/login";
     }
 }
