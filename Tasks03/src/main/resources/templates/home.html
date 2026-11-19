@@ -13,11 +13,16 @@
     <br>
 </div>
 
+<div th:if="${currentUser == null}">
+    <b>Авторизуйтесь для получения полного функционала.</b><br>
+    <br>
+</div>
+
 
 
 <a href = "/users/view">См. список пользователей</a> <br>
-<a href = "/login">Войти в систему</a> <br>
-<a href = "/register">Зарегистрироваться в системе</a> <br><br>
+<a th:if = "${currentUser == null}"  href = "/login">Войти в систему</a> <br>
+<a th:if = "${currentUser == null}" href = "/register">Зарегистрироваться в системе</a> <br><br>
 <a href = "/profile">Данные о текущем пользователе</a> <br><br>
 
 <form th:action="@{/logout}" method="post">

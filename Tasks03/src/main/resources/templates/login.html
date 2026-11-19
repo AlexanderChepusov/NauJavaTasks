@@ -15,17 +15,22 @@
 <div th:if="${param.logout}">
     Вы успешно вышли из системы!  <br>
 </div>
+<p th:if="${currentUser != null}">
+    Вы уже авторизованы.
+</p>
 
-<p>New here? Click
-    <a th:href="@{/register}">here</a> to register.</p>
+<div th:if="${currentUser == null}">New here? Click
+    <a th:href="@{/register}">here</a> to register.<br>
 
-<form method="POST" th:action="@{/login}" id="LoginForm">
-    <label for="username">Username: </label>
-    <input type="text" name="username" id="username" /><br/>
-    <label for="password">Password: </label>
-    <input type="password" name="password" id="password" /><br/>
-    <input type="submit" value="Login"/>
-</form>
+    <form method="POST" th:action="@{/login}" id="LoginForm">
+        <label for="username">Username: </label>
+        <input type="text" name="username" id="username" /><br/>
+        <label for="password">Password: </label>
+        <input type="password" name="password" id="password" /><br/>
+        <input type="submit" value="Login"/>
+    </form>
+
+</div>
 
 </body>
 </html>
