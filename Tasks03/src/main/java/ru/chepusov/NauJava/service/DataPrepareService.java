@@ -8,9 +8,7 @@ import ru.chepusov.NauJava.repository.AccountRepository;
 import ru.chepusov.NauJava.repository.CategoryRepository;
 import ru.chepusov.NauJava.repository.MarketplaceRepository;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -26,8 +24,8 @@ public class DataPrepareService {
     }
 
     public List<Category> prepareCategories() {
-        return StreamSupport.stream(catRep.findAll().spliterator(), false)
-                .toList();
+        return StreamSupport.stream(catRep.findAllByOrderByName().spliterator(), false)
+                .toList(); //findAll(Sort.by("name"))
     }
     public List<Marketplace> prepareMarketplaces() {
         return StreamSupport.stream(mpRep.findAll().spliterator(), false).toList();
@@ -42,6 +40,26 @@ public class DataPrepareService {
 
     public Category getCategoryByName(String name) {
         return catRep.findByName(name);
+    }
+
+    public Category addNewCategory(String name, String percentage, String type) {
+        int perc = -1;
+        if (name == null || name.isEmpty())
+            return null;
+        if (catRep.findByName(name) != null)
+            return catRep.findByName(name);
+        try {
+            perc = Integer.parseInt(percentage);
+        } catch (Exception e) {
+            perc = 0;
+        } finally {
+            Category category  = new Category();
+            category.setType(type);
+            category.setPercentage(perc);
+            category.setName(name.toLowerCase());
+            return catRep.save(category);
+        }
+
     }
 
 }

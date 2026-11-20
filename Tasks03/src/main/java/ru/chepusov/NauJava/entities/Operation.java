@@ -106,7 +106,7 @@ public class Operation {
 
     @Override
     public String toString() {
-        return (type.equalsIgnoreCase("payment") ? "PAYMENT " : "INCOME ") + "$" + amount + " in "
+        return id + "::" + (type.equalsIgnoreCase("payment") ? "PAYMENT " : "INCOME ") + "$" + amount + " in "
                 + category + " category " +
                 dateTime + " in "
                 + marketplace + " (userID "

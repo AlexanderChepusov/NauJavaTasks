@@ -7,6 +7,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ru.chepusov.NauJava.entities.Category;
 import ru.chepusov.NauJava.entities.Operation;
 import ru.chepusov.NauJava.entities.User;
 import ru.chepusov.NauJava.repository.OperationRepository;
@@ -14,7 +16,6 @@ import ru.chepusov.NauJava.service.DataPrepareService;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.time.OffsetTime;
 import java.time.ZoneOffset;
 import java.util.List;
 
@@ -57,10 +58,15 @@ public class OperationWebController {
         model.addAttribute("accList", user.getAccounts());
         model.addAttribute("mpList", dps.prepareMarketplaces());
 
-
         List<Operation> list = opRep.findByUserId(id);
         model.addAttribute("operations", list);
-        model.addAttribute("operation", new Operation());
+
+        Operation op = (Operation)model.getAttribute("operation");
+        System.out.println("<------------------------> " + op);
+
+        if (op == null)
+            op = new Operation();
+        model.addAttribute("operation", op);
         return "operationsList";
     }
 
@@ -71,30 +77,37 @@ public class OperationWebController {
         model.addAttribute("accList", user.getAccounts());
         model.addAttribute("mpList", dps.prepareMarketplaces());
 
-
         List<Operation> list = opRep.findByCategory_Name(category);
+
         model.addAttribute("operations", list);
         model.addAttribute("operation", new Operation());
         return "operationsList";
+    }
+
+    @PostMapping("/fillOperation")
+    public  String fillOperationData(@AuthenticationPrincipal User user , @RequestParam("opID") long id, RedirectAttributes redirectAttributes) {
+        System.out.println("!!!!!!    OPERATION ID = " + id);
+        System.out.println("__________________________We are in fillOperation_______________________");
+        Operation operation = opRep.findById(id).orElse(new Operation());
+        System.out.println(operation);
+        redirectAttributes.addFlashAttribute("operation", operation);
+        //model.addAttribute("operation", operation);
+
+        return "redirect:/operations/" + user.getId();
     }
 
     @PostMapping("/new")
     public String addNewOperation(@AuthenticationPrincipal User user, Model model
             , @ModelAttribute Operation operation, @RequestParam String caty,
                                   @RequestParam String dt) {
-        OffsetDateTime odt;
-        if (dt.isEmpty()) {
-            odt = OffsetDateTime.now();
-        } else {
-            LocalDateTime dateTime = LocalDateTime.parse(dt);
-            ZoneOffset offset = ZoneOffset.ofHours(5);
-            odt = OffsetDateTime.of(dateTime, offset);
-        }
+        OffsetDateTime odt = convertToODT(dt);
 
         operation.setDateTime(odt);
         operation.setUser(user);
         operation.setCategory(dps.getCategoryByName(caty));
+
         System.out.println(operation);
+
         opRep.save(operation);
 
         model.addAttribute("catList", dps.prepareCategories());
@@ -104,6 +117,35 @@ public class OperationWebController {
         List<Operation> list = opRep.findByUserId(user.getId());
         model.addAttribute("operation", new Operation());
         model.addAttribute("operations", list);
+        return "redirect:/operations/" + user.getId();
+    }
+
+    public OffsetDateTime convertToODT(String dt) {
+        OffsetDateTime odt;
+        if (dt.isEmpty() || dt == null) {
+            LocalDateTime ldt = LocalDateTime.now();
+            odt = OffsetDateTime.of(ldt, ZoneOffset.ofHours(0));
+            ZoneOffset zo = odt.getOffset();
+            //System.out.println("<><><><><><>" + odt);
+//            odt = odt.withOffsetSameInstant(ZoneOffset.of("+00:00"));
+//            System.out.println("<><><><><><>" + odt);
+//            odt = odt.withOffsetSameInstant(ZoneOffset.of("-05:00"));
+//            System.out.println("<><><><><><>" + odt);
+        } else {
+            LocalDateTime dateTime = LocalDateTime.parse(dt);
+            ZoneOffset offset = ZoneOffset.ofHours(0);
+            odt = OffsetDateTime.of(dateTime, offset);
+        }
+        return odt;
+    }
+
+    @PostMapping("/newCat")
+    public String addNewCategory(@AuthenticationPrincipal User user, @RequestParam String catName, @RequestParam String percentage, @RequestParam String type) {
+        Category category = dps.addNewCategory(catName, percentage, type); //new Category();
+
+        System.out.println(category + ", " + category.getPercentage() + "%, type - " + category.getType());
+
+        System.out.println();
         return "redirect:/operations/" + user.getId();
     }
 

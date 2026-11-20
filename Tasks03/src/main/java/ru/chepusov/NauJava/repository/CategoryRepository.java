@@ -1,6 +1,5 @@
 package ru.chepusov.NauJava.repository;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +17,8 @@ public interface CategoryRepository extends CrudRepository<Category, Integer> {
         Category result = new Category(name, perc, type);
         save(result);
     }
+
+    List<Category> findAllByOrderByName(); //findAll(Sort.by("name"))
 
     @Transactional
     void deleteByNameIgnoreCase(String name);

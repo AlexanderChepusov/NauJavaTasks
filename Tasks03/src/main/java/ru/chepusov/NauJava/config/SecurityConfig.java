@@ -35,7 +35,7 @@ public class SecurityConfig {
                     .requestMatchers("/create", "/reports/create").hasRole("CREATOR")
                     .requestMatchers("/register", "/registration", "/","/login").permitAll()
                     //.requestMatchers("/", "/users").permitAll()
-                    .requestMatchers("/**").authenticated()
+                    .requestMatchers("/**").authenticated()     //permitAll() //
                 )
                 .formLogin(form -> form
                                 .loginPage("/login")

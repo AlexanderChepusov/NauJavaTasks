@@ -25,6 +25,7 @@
         <thead>
             <tr>
                 <b>
+                    <th><label for="id">#</label></th>
                     <th><label for="type">Вид</label></th>
                     <th><label for="amount">Сумма</label></th>
                     <th><label for="category">Категория</label></th>
@@ -43,6 +44,9 @@
         </span>
 -->
                 <td>
+                    <input type="text" th:field="*{id}" placeholder="ID, если хотите изменить операцию">
+                </td>
+                <td>
                     <select id="type" th:field="*{type}">
                         <option value="payment">Покупка</option>
                         <option value="income">Доход</option>
@@ -53,11 +57,13 @@
                     <input type="text" th:field="*{amount}" id = "amount" placeholder="Сумма">
                 </td>
                 <td>
-                    <select id="category" name="caty">
+                    <select id="category" name = "caty"><!--th:field="${operation.category.name}"-->
                         <!--option value="">-- Пожалуйста, выберите вариант --</option-->
                         <option th:each="cat : ${catList}"
                                 th:value="${cat.name}"
-                                th:text="${cat.name}"></option>
+                                th:text="${cat.name}"
+                                th:selected="${cat.name == operation?.category?.name}">
+                        </option>
                         <!--option value="*{catList.name}"></option-->
                         <!--option value="payment">Покупка</option-->
 
@@ -82,9 +88,33 @@
                     <input type="datetime-local" name="dt" id="date-time">
                 </td>
             </tr>
+
         </tbody>
-    </table><input type="submit" value="Создать">
+
+    </table><br>
+    <input type="submit" value="Создать"> <br>
+    <form th:action="@{/operations/fillOperation}" method="post" >
+
+        <label for="id">Введите ID операции для редактирования</label>
+        <input type="text" id="id" name="opID" placeholder="ID">
+        <button type="submit" formaction="/operations/fillOperation" formmethod="post">Изменить по ID</button>
+    </form>
 </form>
+
+<br>
+<form th:action="@{/operations/newCat}" method="post" th:object="${category}">
+    <label for="catName">Добавить новую категорию</label><br>
+    <input type="text" id="catName" name="catName" placeholder="Название категории">
+    <input type="text" name = "percentage" placeholder="%">
+    <select name = "type">
+        <option value="payment">Покупка</option>
+        <option value="income">Доход</option>
+        <option value="saving">Накопление</option>
+    </select>
+
+    <input type="submit" th:value="Добавить">
+</form>
+
 
 <h3>------------------------------------------------------------------------------</h3>
 
