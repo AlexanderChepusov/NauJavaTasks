@@ -30,6 +30,7 @@
                     <th><label for="category">Категория</label></th>
                     <th><label for="account">Счет</label></th>
                     <th><label for="marketplace">Магазин</label></th>
+                    <th><label for="date-time">Дата, время</label></th>
                 </b>
             </tr>
         </thead>
@@ -76,6 +77,9 @@
                                 th:value="${mp.id}"
                                 th:text="|${mp.name}, ${mp.address}|"></option>
                     </select>
+                </td>
+                <td>
+                    <input type="datetime-local" name="dt" id="date-time">
                 </td>
             </tr>
         </tbody>

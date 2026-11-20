@@ -1,2 +1,4 @@
-package ru.chepusov.NauJava;public class UserServiceTest {
+package ru.chepusov.NauJava;
+
+public class UserServiceTest {
 }

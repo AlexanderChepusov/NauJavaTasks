@@ -12,7 +12,10 @@ import ru.chepusov.NauJava.entities.User;
 import ru.chepusov.NauJava.repository.OperationRepository;
 import ru.chepusov.NauJava.service.DataPrepareService;
 
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Controller
@@ -77,10 +80,18 @@ public class OperationWebController {
 
     @PostMapping("/new")
     public String addNewOperation(@AuthenticationPrincipal User user, Model model
-            , @ModelAttribute Operation operation, @RequestParam String caty) {
-        System.out.println("-------I've got category " + caty + " ------------");
-        //заглушка
-        operation.setDateTime(OffsetDateTime.now());
+            , @ModelAttribute Operation operation, @RequestParam String caty,
+                                  @RequestParam String dt) {
+        OffsetDateTime odt;
+        if (dt.isEmpty()) {
+            odt = OffsetDateTime.now();
+        } else {
+            LocalDateTime dateTime = LocalDateTime.parse(dt);
+            ZoneOffset offset = ZoneOffset.ofHours(5);
+            odt = OffsetDateTime.of(dateTime, offset);
+        }
+
+        operation.setDateTime(odt);
         operation.setUser(user);
         operation.setCategory(dps.getCategoryByName(caty));
         System.out.println(operation);
