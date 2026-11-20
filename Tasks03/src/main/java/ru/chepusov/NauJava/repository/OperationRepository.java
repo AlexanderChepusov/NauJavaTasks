@@ -20,6 +20,8 @@ public interface OperationRepository extends CrudRepository<Operation, Long> {
 
     List<Operation> findByUserAndCategory_NameIgnoreCase(long userId, String category);
 
+    List<Operation> findByUserAndCategory_NameIgnoreCaseAndByType(long userId, String category, String type);
+
     List<Operation> findByUserId(long id);
 
     List<Operation> findByType(String type);
