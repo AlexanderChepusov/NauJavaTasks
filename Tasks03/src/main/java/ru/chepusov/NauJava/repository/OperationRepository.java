@@ -4,12 +4,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.stereotype.Repository;
 import ru.chepusov.NauJava.entities.Category;
 import ru.chepusov.NauJava.entities.Operation;
 
 import java.util.List;
-import java.util.Locale;
 
 @RepositoryRestResource
 public interface OperationRepository extends CrudRepository<Operation, Long> {
@@ -21,14 +19,14 @@ public interface OperationRepository extends CrudRepository<Operation, Long> {
 
     List<Operation> findByUserAndCategory_NameIgnoreCase(long userId, String category);
 
-    List<Operation> findByUserAndCategory_NameIgnoreCaseAndType(long userId, String category, String type);
+    List<Operation> findByUser_IdAndCategory_NameIgnoreCaseAndType(long userId, String category, String type);
 
     List<Operation> findByUserId(long id);
 
     List<Operation> findByType(String type);
 
-    @Query("select o.category from Operation o where o.user.id = :id order by o.category.name")
-    List<Category> getUserCategorises(@Param("id") Long id);
+    @Query("select distinct o.category.name from Operation o where o.user.id = :id order by o.category.name")
+    List<String> getUserCategorises(@Param("id") Long id);
 
     //List<Category> findCategoryByUserIdOrderByCategory_Name(long id);
 

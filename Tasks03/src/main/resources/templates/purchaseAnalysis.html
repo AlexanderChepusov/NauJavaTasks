@@ -26,8 +26,8 @@
   </thead>
   <tbody>
   <!-- Цикл по списку данных -->
-  <tr th:each="info : ${data}">
-    <td th:text="${info[0]}">категория</td>
+  <tr th:each="info : ${data}" th:if="${info[0]} != null">
+    <td  th:text="${info[0]}">категория</td>
     <td th:text="${info[1]}">сумма</td>
     <td th:text="${info[2]}">ср.чек</td>
     <td th:text="${info[3]}">кол-во</td>
