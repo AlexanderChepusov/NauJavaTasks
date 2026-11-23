@@ -23,5 +23,7 @@ public interface CategoryRepository extends CrudRepository<Category, Integer> {
     @Transactional
     void deleteByNameIgnoreCase(String name);
     @Transactional
-    void deleteByName(String name);
+    default void deleteByName(String name) {
+        deleteByNameIgnoreCase(name);
+    }
 }
