@@ -5,6 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
+import ru.chepusov.NauJava.entities.Category;
 import ru.chepusov.NauJava.entities.Operation;
 
 import java.util.List;
@@ -25,6 +26,11 @@ public interface OperationRepository extends CrudRepository<Operation, Long> {
     List<Operation> findByUserId(long id);
 
     List<Operation> findByType(String type);
+
+    @Query("select o.category from Operation o where o.user.id = :id order by o.category.name")
+    List<Category> getUserCategorises(@Param("id") Long id);
+
+    //List<Category> findCategoryByUserIdOrderByCategory_Name(long id);
 
     @Query("SELECT o FROM Operation o join o.category c where c.name = :cat ")
     List<Operation> findByCat(@Param("cat") String cat);

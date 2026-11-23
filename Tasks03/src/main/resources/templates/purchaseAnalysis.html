@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Анализ расходов</title>
+</head>
+<body>
+<header>
+  <h1 th:text="|---Расходя для ${currentUser?.firstName} ${currentUser?.lastName} (${currentUser?.login})---|">Пользователь неизвестен...</h1>
+
+
+</header>
+
+<h2>Анализ расходов по категориям</h2>
+
+<table border="1">
+  <thead>
+  <tr>
+    <b>
+      <th><label for="category">Категория</label></th>
+      <th><label for="summ">Сумма расходов</label></th>
+      <th><label for="average">Средний чек</label></th>
+      <th><label for="count">Количество операций</label></th>
+    </b>
+  </tr>
+  </thead>
+  <tbody>
+  <!-- Цикл по списку данных -->
+  <tr th:each="info : ${data}">
+    <td th:text="${info[0]}">категория</td>
+    <td th:text="${info[1]}">сумма</td>
+    <td th:text="${info[2]}">ср.чек</td>
+    <td th:text="${info[3]}">кол-во</td>
+    <!--td th:text="${op?.category?.name}">Категория</td>
+    <td th:text="${op?.account?.name}">Счет</td>
+    <td th:text="${op?.marketplace?.name}">Магазин</td-->
+  </tr>
+  </tbody>
+
+</table><br>
