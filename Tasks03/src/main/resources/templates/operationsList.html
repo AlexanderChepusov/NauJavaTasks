@@ -168,8 +168,12 @@
 </body>
 
 <footer>
-    <p><input type="button" value="Logout"><br>
-        Выход и прочая навигация</p>
+    <p>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Выйти</button>
+        </form><br>
+        Выход и прочая навигация
+    </p>
 </footer>
 </html>
 
