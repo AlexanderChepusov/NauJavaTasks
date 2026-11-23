@@ -15,16 +15,32 @@ import ru.chepusov.NauJava.entities.MoneyOperation;
 
 @Configuration
 @ConfigurationProperties(prefix="app")
-@PropertySource("classpath:application.properties")
+//@PropertySource("classpath:application.properties")
 public class Config
 {
-    //@Value(prefix=app)
+    //@Value(prefix="${app}")
     String name;
     String version;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
     @PostConstruct
     private void appDataPrint() {
-        System.out.println(name + ", version " + version);
+        System.out.println("---- PostConst.: " + name + ", version " + version + " -----");
     }
 
     @Bean
