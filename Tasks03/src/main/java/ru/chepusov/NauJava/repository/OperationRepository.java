@@ -28,6 +28,9 @@ public interface OperationRepository extends CrudRepository<Operation, Long> {
     @Query("select distinct o.category.name from Operation o where o.user.id = :id order by o.category.name")
     List<String> getUserCategorises(@Param("id") Long id);
 
+    @Query("select distinct o.category.name from Operation o where o.user.id = :id and o.type=\"saving\" order by o.category.name")
+    List<String> getUserSavingCategorises(@Param("id") Long id);
+
     //List<Category> findCategoryByUserIdOrderByCategory_Name(long id);
 
     @Query("SELECT o FROM Operation o join o.category c where c.name = :cat ")

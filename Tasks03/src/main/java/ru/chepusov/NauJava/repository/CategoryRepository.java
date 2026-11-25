@@ -11,7 +11,7 @@ import java.util.List;
 public interface CategoryRepository extends CrudRepository<Category, Integer> {
     Category findByName(String name);
 
-    List<Category> findByPercentageLessThanAndPercentageGreaterThan(int less, int more);
+    //List<Category> findByPercentageLessThanAndPercentageGreaterThan(int less, int more);
 
     default void addNewCategory(String name, int perc, String type) {
         Category result = new Category(name, perc, type);
