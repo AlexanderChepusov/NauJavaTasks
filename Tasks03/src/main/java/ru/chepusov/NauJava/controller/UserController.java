@@ -10,7 +10,8 @@ import ru.chepusov.NauJava.repository.UserRepository;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping(path="/users", produces="application/json")
+//@CrossOrigin(origins={"http://tacocloud:8080", "http://tacocloud.com"})
 @Tag(name = "Пользователи")
 public class UserController {
     private final UserRepository userRep;

@@ -1,6 +1,7 @@
 package ru.chepusov.NauJava.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -97,6 +98,7 @@ public class OperationWebController {
     }
 
     @PostMapping("/new")
+    @ResponseStatus(HttpStatus.CREATED)
     public String addNewOperation(@AuthenticationPrincipal User user, Model model
             , @ModelAttribute Operation operation, @RequestParam String caty,
                                   @RequestParam String dt) {
@@ -140,6 +142,7 @@ public class OperationWebController {
     }
 
     @PostMapping("/newCat")
+    @ResponseStatus(HttpStatus.CREATED)
     public String addNewCategory(@AuthenticationPrincipal User user, @RequestParam String catName, @RequestParam String percentage, @RequestParam String type) {
         Category category = dps.addNewCategory(catName, percentage, type); //new Category();
 
